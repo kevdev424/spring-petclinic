@@ -30,7 +30,7 @@ jobs:
       - name: Unit Test
         run: ./mvnw --batch-mode -Dmaven.test.failure.ignore=true test
       - name: Unit Test Report
-        uses: dorny/test-reporter@1
+        uses: dorny/test-reporter@v1
         if: always()
         with:
           name: Maven Tests
