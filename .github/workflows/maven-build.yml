@@ -27,3 +27,5 @@ jobs:
           cache: maven
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
+      - name: Unit Test
+        run: ./mvnw --batch-mode -Dmaven.test.failure.ignore=true test
