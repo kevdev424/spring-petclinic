@@ -1,9 +1,11 @@
 name: Package Pet Clinic
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
-
+    
 jobs:
   build:
     runs-on: windows-latest
@@ -26,3 +28,6 @@ jobs:
       run: mvn configure-repository --repository-url=https://github.com/${{github.repository}}
     - name: Run CI/CD Pipeline
       run: mvn ci-cd-pipeline
+    - name: Validate
+      if: github.event_name == 'pull_request'
+      run: mvn validate
