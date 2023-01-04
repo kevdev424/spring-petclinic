@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install Dependencies
-      run: mvn install
+      run: mvn install -Dmaven.repo.local=C:/Users/runneradmin/.m2/repository
     - name: Build
       run: mvn package
     - name: Test
