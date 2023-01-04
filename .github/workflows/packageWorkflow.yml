@@ -26,6 +26,9 @@ jobs:
       run: mvn deploy --registry https://npm.pkg.github.com/
     - name: Configure Repository
       run: mvn configure-repository --repository-url=https://github.com/${{github.repository}}
+    - name: Push to Repo
+      if: github.event_name == 'push'
+      run: git push --set-upstream origin ${{github.ref}}
     - name: Run CI/CD Pipeline
       run: mvn ci-cd-pipeline
     - name: Validate
