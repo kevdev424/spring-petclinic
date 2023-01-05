@@ -23,7 +23,7 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Install Dependencies
-      run: mvn install -Dspring-boot.version=${{ github.ref }} -Drepository-url=https://repo.maven.apache.org/maven2 -DskipTests
+      run: mvn install -Dspring-boot.version=${{ github.ref }} -Drepository-url=https://repo.maven.apache.org/maven2 -DskipTests 
     - name: Build
       run: mvn -B package --file pom.xml
     - name: Test
@@ -47,3 +47,8 @@ jobs:
     - name: Validate
       if: github.event_name == 'pull_request'
       run: mvn validate
+    - name: Create Release
+      if: github.event_name == 'push'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
