@@ -37,14 +37,14 @@ jobs:
       if: github.event_name == 'pull_request'
       run: mvn validate
     - name: Push to GitHub Packages
-      uses: actions/github-packages@v1
+      uses: actions/github-packages@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         repository-url: https://npm.pkg.github.com/${{github.repository}}
         package-location: ./target
     - name: Create Release
       if: github.event_name == 'push'
-      uses: actions/create-release@v1
+      uses: actions/create-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
