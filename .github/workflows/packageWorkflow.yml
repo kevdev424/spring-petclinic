@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install Dependencies
-      run: mvn install -Dmaven.repo.local=C:/Users/runneradmin/.m2/repository -Dspring-boot.version=${{ github.ref }} -Drepository-url=https://repo.maven.apache.org/maven2 -DskipTests
+      run: mvn install -Dspring-boot.version=${{ github.ref }} -Drepository-url=https://repo.maven.apache.org/maven2 -DskipTests
     - name: Build
       run: mvn package
     - name: Test
