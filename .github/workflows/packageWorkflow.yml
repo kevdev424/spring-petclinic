@@ -6,22 +6,39 @@ on:
     branches: [main]
   push:
     branches: [main]
-    
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
         java: [ '17' ]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK ${{matrix.java}}
-        uses: actions/setup-java@v2
-        with:
-          java-version: ${{matrix.java}}
-          distribution: 'adopt'
-          cache: maven
-      - name: Build with Maven Wrapper
-        run: ./mvnw -B package
+    - uses: actions/checkout@v2
+    - name: Set up JDK ${{matrix.java}}
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{matrix.java}}
+        distribution: 'adopt'
+        cache: maven
+    - name: Install Dependencies
+      run: mvn install -Dspring-boot.version=${{ github.ref }} -Drepository-url=https://repo.maven.apache.org/maven2 -DskipTests
+    - name: Build
+      run: mvn package
+    - name: Test
+      run: mvn test
+    - name: Create Package
+      run: mvn pack
+    - name: Publish Package
+      run: mvn deploy --registry https://npm.pkg.github.com/
+    - name: Configure Repository
+      run: mvn configure-repository --repository-url=https://github.com/${{github.repository}}
+    - name: Push to Repo
+      if: github.event_name == 'push'
+      run: git push --set-upstream origin ${{github.ref}}
+    - name: Run CI/CD Pipeline
+      run: mvn ci-cd-pipeline
+    - name: Validate
+      if: github.event_name == 'pull_request'
+      run: mvn validate
