@@ -33,8 +33,6 @@ jobs:
     - name: Push to Repo
       if: github.event_name == 'push'
       run: git push --set-upstream origin ${{github.ref}}
-    - name: Run CI/CD Pipeline
-      run: mvn ci-cd-pipeline
     - name: Validate
       if: github.event_name == 'pull_request'
       run: mvn validate
