@@ -30,10 +30,6 @@ jobs:
       run: mvn test
     - name: Create Package
       run: mvn package
-    - name: Publish Package
-      run: mvn --batch-mode deploy --repository-url ${{ github.repository }} --DaltDeploymentRepository=${{ github.repository }}
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Push to Repo
       if: github.event_name == 'push'
       run: git push --set-upstream origin ${{github.ref}}
