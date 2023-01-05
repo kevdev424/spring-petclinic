@@ -28,11 +28,6 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Test
       run: mvn test
-    - name: Configure Repository
-      run: mvn --batch-mode deploy
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_URL: ${{ github.repository }}
     - name: Create Package
       run: mvn package
     - name: Publish Package
@@ -52,3 +47,7 @@ jobs:
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+        
+        
+ 
