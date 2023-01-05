@@ -28,12 +28,14 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Test
       run: mvn test
-    - name: Create Package
-      run: mvn package
     - name: Configure Repository
       run: mvn configure-repository --repository-url=https://github.com/${{github.repository}}
+    - name: Create Package
+      run: mvn package
     - name: Publish Package
-      run: mvn deploy -Dregistry=https://npm.pkg.github.com/
+      run: mvn --batch-mode deploy
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Push to Repo
       if: github.event_name == 'push'
       run: git push --set-upstream origin ${{github.ref}}
