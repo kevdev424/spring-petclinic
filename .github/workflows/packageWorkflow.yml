@@ -31,7 +31,7 @@ jobs:
     - name: Create Package
       run: mvn package
     - name: Publish Package
-      run: mvn deploy -Dregistry=https://npm.pkg.github.com/${{username}}
+      run: mvn deploy -Dregistry=https://npm.pkg.github.com/
     - name: Configure Repository
       run: mvn configure-repository --repository-url=https://github.com/${{github.repository}}
     - name: Push to Repo
