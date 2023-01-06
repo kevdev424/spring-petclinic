@@ -23,6 +23,5 @@ jobs:
           cache: maven
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
-      - name: look at directory
-        run: |
-          mvn deploy
+      - name: Deploy package
+        run: ./mvnw deploy
