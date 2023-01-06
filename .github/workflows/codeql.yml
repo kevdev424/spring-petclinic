@@ -58,9 +58,16 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     # - name: Autobuild
-    #  uses: github/codeql-action/autobuild@v2
+    #  uses: github/codeql-action/autobuild@v2- name: Set up JDK ${{matrix.java}}
+    - name: Set up JDK    
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+        distribution: 'adopt'
+        cache: maven
+
     - name: Custom Build
-      uses: ./.github/workflows/maven-build.yml
+      uses: ./mvnw -B package
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
