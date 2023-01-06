@@ -42,3 +42,26 @@ jobs:
           cache: maven
       - name: Test with Maven Wrapper
         run: ./mvnw -B test
+           
+        
+  package:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK ${{matrix.java}}
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{matrix.java}}
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven Wrapper
+        run: ./mvnw -B package
+      - name: Publish Package to GitHub Packages
+        uses: actions/upload-artifact@v2
+        with:
+          name: pet-clinic-package
+          path: target/pet-clinic-0.0.1-SNAPSHOT.jar
