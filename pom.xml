@@ -113,6 +113,14 @@
     </dependency>
 
   </dependencies>
+  
+  <distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub kevedev424 Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/kevdev424/spring-petclinic</url>
+   </repository>
+  </distributionManagement>
 
   <build>
     <plugins>
