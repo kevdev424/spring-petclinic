@@ -31,5 +31,5 @@ jobs:
       - name: Publish Package to GitHub Packages
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.repository }}
+          name: spring-petclinic
           path: target/spring-petclinic-3.0.0-SNAPSHOT.jar
