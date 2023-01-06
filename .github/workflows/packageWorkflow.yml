@@ -63,5 +63,5 @@ jobs:
       - name: Publish Package to GitHub Packages
         uses: actions/upload-artifact@v2
         with:
-          name: pet-clinic-package
-          path: target/pet-clinic-0.0.1-SNAPSHOT.jar
+          name: ${PACKAGE_NAME}
+          path: ${PACKAGE_PATH}
