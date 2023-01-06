@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ github.repository }}
-          path: spring-petclinic-3.0.0-SNAPSHOT.jar
+          path: target/spring-petclinic-3.0.0-SNAPSHOT.jar
