@@ -19,6 +19,7 @@ jobs:
         with:
             java-version: ${{ matrix.java }}
             settings-path: .m2/settings.xml
+            distribution: 'adopt'
       - uses: actions/checkout@v2
       - name: Set up JDK ${{matrix.java}}
         uses: actions/setup-java@v2
