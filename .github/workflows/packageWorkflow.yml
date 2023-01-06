@@ -45,7 +45,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package
       - name: Publish to GitHub Packages
-        uses: actions/upload-package@v2
+        uses: actions/upload-artifact@v2
         with:
           package: 'target/*.jar'
           repository: ${{ env.REPOSITORY_NAME }}
