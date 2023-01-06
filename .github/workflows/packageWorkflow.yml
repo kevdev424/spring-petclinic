@@ -63,5 +63,5 @@ jobs:
       - name: Publish Package to GitHub Packages
         uses: actions/upload-artifact@v2
         with:
-          name: ${PACKAGE_NAME}
-          path: ${PACKAGE_PATH}
+          name: ${{ github.repository }}
+          path: target/${{ github.repository }}-*.jar
