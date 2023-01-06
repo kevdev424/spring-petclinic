@@ -60,6 +60,8 @@ jobs:
           cache: maven
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
+      - name: look at directory
+        run: ls
       - name: Publish Package to GitHub Packages
         uses: actions/upload-artifact@v2
         with:
