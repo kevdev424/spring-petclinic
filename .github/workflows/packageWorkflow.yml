@@ -29,4 +29,4 @@ jobs:
       - name: Publish package
         run: ./mvnw --batch-mode deploy
         env:
-          TOKEN: ${{ secrets.PUBLISH_PACKAGE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PACKAGE_TOKEN }}
