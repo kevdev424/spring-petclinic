@@ -12,7 +12,9 @@ jobs:
     strategy:
       matrix:
         java: [ '17' ]
-
+    permissions:
+      contents: read
+      packages: write
     
       
 
