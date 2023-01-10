@@ -59,6 +59,13 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     # - name: Autobuild
     #  uses: github/codeql-action/autobuild@v2
+    - name: Set up JDK    
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+        distribution: 'adopt'
+        cache: maven
+
     - name: Custom Build
       run: ./mvnw -B package
 
