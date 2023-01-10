@@ -1,5 +1,5 @@
-
 name: Publish Test Results
+
 
 on:
   push:
@@ -32,12 +32,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
-      
-      - name: look at directory
-        run: |
-          cd src
-          cd test
-          ls
+
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
