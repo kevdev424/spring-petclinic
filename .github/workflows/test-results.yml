@@ -3,9 +3,10 @@ name: Publish Test Results
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "**" ]
   pull_request:
     branches: [ main ]
+  workflow_call:
 
 jobs:
   build:
