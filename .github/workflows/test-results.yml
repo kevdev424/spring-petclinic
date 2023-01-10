@@ -1,4 +1,5 @@
-name: Publish Test Results with Maven
+name: Publish Test Results
+
 
 on:
   push:
@@ -32,8 +33,10 @@ jobs:
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
 
+
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           junit_files: "**/target/surefire-reports/TEST-*.xml"      
+
