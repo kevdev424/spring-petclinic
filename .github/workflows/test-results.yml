@@ -1,6 +1,5 @@
 name: Publish Test Results
 
-
 on:
   push:
     branches: [ "**" ]
