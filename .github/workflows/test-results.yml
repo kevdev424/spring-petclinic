@@ -42,7 +42,7 @@ jobs:
           junit_files: "**/target/surefire-reports/TEST-*.xml"      
           
       - name: Conclusion
-        run: echo "Conclusion is ${{ fromJSON( steps.test-results.outputs.json ).conclusion }}"
+        run: echo '${{ steps.test-results.outputs.json }}' > Test-Results.json
         
       - name: Set badge color
         shell: bash
@@ -77,6 +77,7 @@ jobs:
           gistURL: https://gist.github.com/jjoseph18/0911e2e2e7e1fe5008e15e48e95547a4
           file: badge.svg
           
+       
       - name: Upload json to Gist
         # Upload only for main branch
         if: >
@@ -86,6 +87,4 @@ jobs:
         with:
           token: ${{ secrets.GIST_TOKEN }}
           gistURL: https://gist.github.com/jjoseph18/f4e146b4d5c7f31af5d915bb1cc083b0
-          file: test.json
-          content: ${{fromJSON(steps.test-results.outputs.json)}}
-          
+          file:  Test-Results.json
