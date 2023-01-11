@@ -76,4 +76,3 @@ jobs:
           token: ${{ secrets.GIST_TOKEN }}
           gistURL: https://gist.github.com/jjoseph18/0911e2e2e7e1fe5008e15e48e95547a4
           file: badge.svg
-
