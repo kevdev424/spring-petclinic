@@ -36,13 +36,13 @@ jobs:
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
         id: test-results
+        if: always()
         with:
-          junit_files: "**/target/surefire-reports/TEST-*.xml"      
-          
+          junit_files: "**/target/surefire-reports/TEST-*.xml"            
       - name: Conclusion
-        run: echo '${{ steps.test-results.outputs.json }}' > Test-Results.json
+        run: echo '${{ steps.test-results.outputs.json }}' > conclusion.json
+        
         
       - name: Set badge color
         shell: bash
@@ -58,6 +58,7 @@ jobs:
               echo "BADGE_COLOR=696969" >> $GITHUB_ENV
               ;;
           esac
+
       - name: Create badge
         uses: emibcn/badge-action@d6f51ff11b5c3382b3b88689ae2d6db22d9737d1
         with:
@@ -77,7 +78,6 @@ jobs:
           gistURL: https://gist.github.com/jjoseph18/0911e2e2e7e1fe5008e15e48e95547a4
           file: badge.svg
           
-       
       - name: Upload json to Gist
         # Upload only for main branch
         if: >
@@ -87,4 +87,4 @@ jobs:
         with:
           token: ${{ secrets.GIST_TOKEN }}
           gistURL: https://gist.github.com/jjoseph18/f4e146b4d5c7f31af5d915bb1cc083b0
-          file:  Test-Results.json
+          file: conclusion.json
