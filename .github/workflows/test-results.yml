@@ -37,6 +37,7 @@ jobs:
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
+        id: test-results
         with:
           junit_files: "**/target/surefire-reports/TEST-*.xml"      
           
