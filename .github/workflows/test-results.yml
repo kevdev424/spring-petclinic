@@ -86,4 +86,6 @@ jobs:
         with:
           token: ${{ secrets.GIST_TOKEN }}
           gistURL: https://gist.github.com/jjoseph18/f4e146b4d5c7f31af5d915bb1cc083b0
-          file: ${{ steps.test-results.outputs.json }}
+          file: test.json
+          content: ${{fromJSON(steps.test-results.outputs.json)}}
+          
