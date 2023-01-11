@@ -1,10 +1,11 @@
-name: Java CI with Maven
+name: Publish Test Results
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "**" ]
   pull_request:
     branches: [ main ]
+  workflow_call:
 
 jobs:
   build:
@@ -31,13 +32,14 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
-      
+
+
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        id: test-results
         if: always()
         with:
-          junit_files: "**/target/surefire-reports/TEST-*.xml"             
+          junit_files: "**/target/surefire-reports/TEST-*.xml"      
+          
       - name: Conclusion
         run: echo "Conclusion is ${{ fromJSON( steps.test-results.outputs.json ).conclusion }}"
         
@@ -55,7 +57,6 @@ jobs:
               echo "BADGE_COLOR=696969" >> $GITHUB_ENV
               ;;
           esac
-
       - name: Create badge
         uses: emibcn/badge-action@d6f51ff11b5c3382b3b88689ae2d6db22d9737d1
         with:
