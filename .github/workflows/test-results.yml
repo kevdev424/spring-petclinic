@@ -40,8 +40,8 @@ jobs:
         if: always()
         with:
           junit_files: "**/target/surefire-reports/TEST-*.xml"            
-      - name: Conclusion
-        run: echo '${{ steps.test-results.outputs.json }}' > conclusion.json
+      - name: test-results
+        run: echo '${{ steps.test-results.outputs.json }}' > test-results.json
         
         
       - name: Set badge color
@@ -87,4 +87,4 @@ jobs:
         with:
           token: ${{ secrets.GIST_TOKEN }}
           gistURL: https://gist.github.com/kevdev424/dea58201c2164fe01617df1fa2a6216d
-          file: conclusion.json
+          file: test-results.json
