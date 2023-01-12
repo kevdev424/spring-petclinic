@@ -83,7 +83,12 @@ jobs:
 
       - name: Create resource group
         run: az group create -l eastus -n td-petclinic-rg
-
+        
+      - name: Deploy resources
+        run: |
+          mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
+          mvn package azure-webapp:deploy
+  
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
