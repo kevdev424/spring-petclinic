@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ main ]
   workflow_call:
+  
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
 
 jobs:
   build:
@@ -72,8 +78,8 @@ jobs:
       - name: Upload badge to Gist
         # Upload only for main branch
         if: >
-          github.event_name == 'workflow_run' && (github.event.workflow_run.head_branch == 'main' || github.event.workflow_run.head_branch == 'pull/*') ||
-          github.event_name != 'workflow_run' && (github.ref == 'refs/heads/main' || github.ref == 'refs/pull/*')
+          github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' ||
+          github.event_name != 'workflow_run' && github.ref == 'refs/heads/main'
         uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
         with:
           token: ${{ secrets.GIST_TOKEN }}
@@ -83,8 +89,8 @@ jobs:
       - name: Upload json to Gist
         # Upload only for main branch
         if: >
-          github.event_name == 'workflow_run' && (github.event.workflow_run.head_branch == 'main' || github.event.workflow_run.head_branch == 'pull/*') ||
-          github.event_name != 'workflow_run' && (github.ref == 'refs/heads/main' || github.ref == 'refs/pull/*')
+          github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' ||
+          github.event_name != 'workflow_run' && github.ref == 'refs/heads/main'
         uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
         with:
           token: ${{ secrets.GIST_TOKEN }}
