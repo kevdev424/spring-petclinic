@@ -75,7 +75,7 @@ jobs:
         uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
         with:
           token: ${{ secrets.GIST_TOKEN }}
-          gistURL: https://gist.github.com/jjoseph18/0911e2e2e7e1fe5008e15e48e95547a4
+          gistURL: https://gist.github.com/kevdev424/c23a0c5e0cb2fa93ecf6660d43280060
           file: badge.svg
           
       - name: Upload json to Gist
@@ -86,5 +86,5 @@ jobs:
         uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
         with:
           token: ${{ secrets.GIST_TOKEN }}
-          gistURL: https://gist.github.com/jjoseph18/f4e146b4d5c7f31af5d915bb1cc083b0
+          gistURL: https://gist.github.com/kevdev424/dea58201c2164fe01617df1fa2a6216d
           file: conclusion.json
