@@ -41,7 +41,9 @@ jobs:
         with:
           junit_files: "**/target/surefire-reports/TEST-*.xml"            
       - name: test-results
-        run: echo '${{ steps.test-results.outputs.json }}' > test-results.json
+        run: | 
+            echo '${{ steps.test-results.outputs.json }}' > test-results.json
+            echo $(date) >> test-results.json
         
         
       - name: Set badge color
