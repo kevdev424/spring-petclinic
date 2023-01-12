@@ -84,8 +84,10 @@ jobs:
       - name: Create resource group
         run: az group create -l eastus -n td-petclinic-rg
         
-      - name: Deploy resources
+      - name: test deploying resources and spring app using cli
         run: |
+          git clone https://github.com/kevdev424/spring-petclinic.git
+          cd spring-petclinic
           mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
           mvn package azure-webapp:deploy
   
