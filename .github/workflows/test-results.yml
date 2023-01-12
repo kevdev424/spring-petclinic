@@ -76,7 +76,7 @@ jobs:
         with:
           token: ${{ secrets.GIST_TOKEN }}
           gistURL: https://gist.github.com/kevdev424/c23a0c5e0cb2fa93ecf6660d43280060
-          file: badge.svg
+          file: gistfile1.txt
           
       - name: Upload json to Gist
         # Upload only for main branch
@@ -87,4 +87,4 @@ jobs:
         with:
           token: ${{ secrets.GIST_TOKEN }}
           gistURL: https://gist.github.com/kevdev424/dea58201c2164fe01617df1fa2a6216d
-          file: conclusion.json
+          file: gistfile1.txt
