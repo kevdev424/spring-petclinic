@@ -22,14 +22,9 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: 'Test az commands'
         run: |
-          java --version
           az account show
           az group list
-          pwd 
-          git clone https://github.com/kevdev424/spring-petclinic.git
-          cd spring-petclinic
-          mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
-          mvn package azure-webapp:deploy
+          pwd
       - name: Create resource group
         run: az group create -l eastus -n td-petclinic-rg
       
