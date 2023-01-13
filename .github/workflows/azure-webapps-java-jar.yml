@@ -55,9 +55,6 @@ jobs:
       - name: Create resource group
         run: az group create -l eastus -n td-petclinic-rg
 
-      - name: Set app service's alwayOn site setting to false
-        run: az webapp config set --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group td-petclinic-rg --always-on false
-
       - name: Deploy resource from bicep file
         uses: azure/arm-deploy@v1
         with:
