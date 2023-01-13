@@ -1,5 +1,5 @@
 @description('Specifies the location for resources.')
-param location string = 'td-petclinic-rg'
+param location string = 'eastus'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'devx-spring-petclinc-asp'
