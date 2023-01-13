@@ -20,15 +20,15 @@
 name: Build and deploy JAR app to Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: spring-petclinic    # set this to the name of your Azure Web App
-  JAVA_VERSION: '17'                  # set this to the Java version to use
-  DISTRIBUTION: zulu                  # set this to the Java distribution
+  AZURE_WEBAPP_NAME: spring-petclinic # set this to the name of your Azure Web App
+  JAVA_VERSION: "17" # set this to the Java version to use
+  DISTRIBUTION: zulu # set this to the Java distribution
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches:    
+    branches:
       - main
   workflow_dispatch:
 
@@ -49,7 +49,7 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.DISTRIBUTION }}
-          cache: 'maven'
+          cache: "maven"
 
       - name: Build with Maven
         run: mvn clean install
@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: "${{ github.workspace }}/target/*.jar"
 
   deploy:
     permissions:
@@ -73,8 +73,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: java-app
-          
-      - name: 'Az CLI login'
+
+      - name: "Az CLI login"
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -83,22 +83,23 @@ jobs:
 
       - name: Create resource group
         run: az group create -l eastus -n td-petclinic-rg
-        
-      - name: test deploying resources and spring app using cli
-        run: |
-          git clone https://github.com/kevdev424/spring-petclinic.git
-          cd spring-petclinic
-          mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
-          mvn package azure-webapp:deploy
-  
+
+      - name: deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: td-petclinic-rg
+          template: ./main.bicep
+          failOnStdErr: false
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: '*.jar'
-          
-      # Azure logout 
+          package: "*.jar"
+
+      # Azure logout
       - name: logout
         run: |
           az logout
