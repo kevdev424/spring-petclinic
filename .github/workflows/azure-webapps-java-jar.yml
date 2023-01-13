@@ -75,7 +75,7 @@ jobs:
           name: java-app
 
       # Checkout code
-      - uses: actions/checkout@kevin-demo
+      - uses: actions/checkout@main
 
       - name: "Az CLI login"
         uses: azure/login@v1
