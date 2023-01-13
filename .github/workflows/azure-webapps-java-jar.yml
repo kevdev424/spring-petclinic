@@ -23,7 +23,6 @@ env:
   AZURE_WEBAPP_NAME: spring-petclinic # set this to the name of your Azure Web App
   JAVA_VERSION: "17" # set this to the Java version to use
   DISTRIBUTION: zulu # set this to the Java distribution
-  RESOURCE_GROUP: "td-petclinic-rg"
 
 on:
   push:
@@ -91,8 +90,8 @@ jobs:
       - name: deploy
         uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./main.bicep
           failOnStdErr: false
 
