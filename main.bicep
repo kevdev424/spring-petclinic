@@ -1,6 +1,9 @@
+@description('Specifies the location for resources.')
+param location string = 'td-petclinic-rg'
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'devx-spring-petclinc-asp'
-  location: 'td-petclinic-rg'
+  location: location
   sku: {
     name: 'F1'
   }
@@ -12,7 +15,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
 
 resource appService 'Microsoft.Web/sites@2021-02-01' = {
   name: 'devx-spring-petclinic'
-  location: 'td-petclinic-rg'
+  location: location
   identity: {
     type: 'SystemAssigned'
   }

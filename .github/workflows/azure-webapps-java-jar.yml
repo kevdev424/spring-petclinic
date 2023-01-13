@@ -90,8 +90,8 @@ jobs:
       - name: deploy
         uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ secrets.AZURE_RG }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: td-petclinic-rg
           template: ./main.bicep
           failOnStdErr: false
 
