@@ -1,29 +1,10 @@
-# This workflow will build and push a Java application to an Azure Web App when a commit is pushed to your default branch.
-#
-# This workflow assumes you have already created the target Azure App Service web app.
-# For instructions see https://docs.microsoft.com/en-us/azure/app-service/quickstart-java?tabs=javase&pivots=platform-linux
-#
-# To configure this workflow:
-#
-# 1. Download the Publish Profile for your Azure Web App. You can download this file from the Overview page of your Web App in the Azure Portal.
-#    For more information: https://docs.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel#generate-deployment-credentials
-#
-# 2. Create a secret in your repository named AZURE_WEBAPP_PUBLISH_PROFILE, paste the publish profile contents as the value of the secret.
-#    For instructions on obtaining the publish profile see: https://docs.microsoft.com/azure/app-service/deploy-github-actions#configure-the-github-secret
-#
-# 3. Change the value for the AZURE_WEBAPP_NAME. Optionally, change the JAVA_VERSION environment variable below.
-#
-# For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
-# For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
-
 name: Build and deploy JAR app to Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: devx-spring-petclinic # set this to the name of your Azure Web App
-  JAVA_VERSION: "17" # set this to the Java version to use
-  DISTRIBUTION: zulu # set this to the Java distribution
-  AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }} # set this to the path to your web app project
+  AZURE_WEBAPP_NAME: devx-spring-petclinic
+  JAVA_VERSION: "17" #Java version to use
+  DISTRIBUTION: zulu # Java distribution
+  AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }} # path to your web app project
 
 on:
   push:
@@ -34,11 +15,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
   deploy:
+    if: ${{ github.actor != 'dependabot[bot]'}}
     permissions:
       id-token: write
       contents: none
@@ -74,10 +55,10 @@ jobs:
       - name: Create resource group
         run: az group create -l eastus -n td-petclinic-rg
 
-      - name: set alwayOn site config to false
+      - name: Set app service's alwayOn site setting to false
         run: az webapp config set --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group td-petclinic-rg --always-on false
 
-      - name: deploy
+      - name: Deploy resource from bicep file
         uses: azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
