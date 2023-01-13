@@ -23,7 +23,6 @@ resource appService 'Microsoft.Web/sites@2021-02-01' = {
     serverFarmId: appServicePlan.id
     reserved: true
     siteConfig: {
-      alwaysOn: false
       ftpsState: 'Disabled'
       linuxFxVersion: 'JAVA|17'
       http20Enabled: true
