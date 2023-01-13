@@ -23,6 +23,7 @@ env:
   AZURE_WEBAPP_NAME: devx-spring-petclinic # set this to the name of your Azure Web App
   JAVA_VERSION: "17" # set this to the Java version to use
   DISTRIBUTION: zulu # set this to the Java distribution
+  AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }} # set this to the path to your web app project
 
 on:
   push:
@@ -103,12 +104,17 @@ jobs:
 #         run: mvn -B package --file pom.xml
 #         working-directory: ./
 
+      - name: locate existing jar files
+        run: |
+          ls -l
+          pwd
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: "*.jar"
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/target/*.jar'
 
       # Azure logout
       - name: logout
