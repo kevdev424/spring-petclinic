@@ -1,4 +1,5 @@
-# Spring PetClinic Sample Application [![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml)
+# Spring PetClinic Sample Application 
+[![Test results](https://gist.githubusercontent.com/kevdev424/c23a0c5e0cb2fa93ecf6660d43280060/raw/da48e399b2a1ba07d015b53d7e317da7e4f64d73/badge.svg)](https://gist.github.com/kevdev424/dea58201c2164fe01617df1fa2a6216d) [![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/spring-projects/spring-petclinic)
 
