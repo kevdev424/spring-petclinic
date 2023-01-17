@@ -2,7 +2,7 @@ name: Package Pet Clinic
 
 on: 
   push:
-    branches: [main]
+    branches: [main, TDENG-340]
   pull_request:
     branches: [main]
 
