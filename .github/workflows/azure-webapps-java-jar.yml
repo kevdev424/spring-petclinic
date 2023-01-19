@@ -7,12 +7,12 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }} # path to your web app project
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+  # push:
+  #   branches: ["main"]
+  # pull_request:
+  #   branches:
+  #     - main
+  # workflow_dispatch:
 
 permissions:
   contents: read
