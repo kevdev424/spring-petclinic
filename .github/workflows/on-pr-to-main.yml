@@ -1,4 +1,4 @@
-name: On push to any branch
+name: On PR to main
 
 on:
   pull_request:
