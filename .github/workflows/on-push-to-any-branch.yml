@@ -2,19 +2,18 @@ name: On push to any branch
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [ '**' ]
 
 jobs:
   call-workflow:
-    uses: octo-org/example-repo/.github/workflows/workflow-A.yml@v1
-
-  call-workflow-passing-data:
-    permissions:
-      contents: read
-      pull-requests: write
-    uses: octo-org/example-repo/.github/workflows/workflow-B.yml@main
-    with:
-      config-path: .github/labeler.yml
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+    uses: ./.github/workflows/maven-build.yml
+#
+#  call-workflow-passing-data:
+#    permissions:
+#      contents: read
+#      pull-requests: write
+#    uses: octo-org/example-repo/.github/workflows/workflow-B.yml@main
+#    with:
+#      config-path: .github/labeler.yml
+#    secrets:
+#      token: ${{ secrets.GITHUB_TOKEN }}
