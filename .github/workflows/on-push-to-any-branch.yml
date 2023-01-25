@@ -8,7 +8,7 @@ jobs:
   call-build-workflow:
     uses: ./.github/workflows/maven-build.yml
   call-codeql-workflow:
-    users: ./.github/workflows/codeql.yml
+    uses: ./.github/workflows/codeql.yml
 #
 #  call-workflow-passing-data:
 #    permissions:
