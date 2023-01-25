@@ -5,8 +5,10 @@ on:
     branches: [ '**' ]
 
 jobs:
-  call-workflow:
+  call-build-workflow:
     uses: ./.github/workflows/maven-build.yml
+  call-codeql-workflow:
+    users: ./.github/workflows/codeql.yml
 #
 #  call-workflow-passing-data:
 #    permissions:
