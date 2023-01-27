@@ -53,7 +53,7 @@ jobs:
       with:
         # Optional, workflow file name or ID
         # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
-        workflow: maven-build.yml
+        workflow: on-push-to-any-branch.yml
         pr: ${{github.event.pull_request.number}}
 
     - name: Perform CodeQL Analysis
