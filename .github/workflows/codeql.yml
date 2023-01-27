@@ -54,25 +54,7 @@ jobs:
         # Optional, workflow file name or ID
         # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
         workflow: maven-build.yml
-        # Optional, no need to specify if PR is
-        commit: 15233b0
-        # Optional, defaults to all types
-        event: push
-        # Optional, check the workflow run to whether it has an artifact
-        # then will get the last available artifact from the previous workflow
-        # default false, just try to download from the last one
-        check_artifacts:  false
-        # Optional, search for the last workflow run whose stored an artifact named as in `name` input
-        # default false
-        search_artifacts: false
-        # Optional, choose to skip unpacking the downloaded artifact(s)
-        # default false
-        skip_unpack: false
-        # Optional, choose how to exit the action if no artifact is found
-        # can be one of:
-        #  "fail", "warn", "ignore"
-        # default fail
-        if_no_artifact_found: fail
+        pr: ${{github.event.pull_request.number}}
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
