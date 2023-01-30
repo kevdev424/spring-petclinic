@@ -34,6 +34,7 @@ jobs:
         run: |
           ls -lR
           pwd
+          az --version
 
       - name: "Az CLI login"
         uses: azure/login@v1
