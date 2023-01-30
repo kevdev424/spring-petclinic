@@ -24,6 +24,8 @@ jobs:
     environment: dev
 
     steps:
+      - uses: actions/checkout@v3
+
       - run: gh run download
 
       - name: look for downloaded artifact
