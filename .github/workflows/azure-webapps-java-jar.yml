@@ -35,7 +35,9 @@ jobs:
           workflow: ${{ github.event.workflow_run.workflow_id }}
 
       - name: look for downloaded artifact
-        run: ls -lR
+        run: |
+          ls -lR
+          pwd
 
       - name: "Az CLI login"
         uses: azure/login@v1
@@ -60,7 +62,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/target/*.jar"
+          package: java-app/spring-petclinic-3.0.0-SNAPSHOT.jar
 
       # Azure logout
       - name: logout
