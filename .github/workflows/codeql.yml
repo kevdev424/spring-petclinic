@@ -35,12 +35,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Download artifact
-      id: download-artifact
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        run_id: ${{ github.run_id }}
-
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2

@@ -23,11 +23,7 @@ jobs:
     environment: dev
 
     steps:
-      - name: Download artifact
-        id: download-artifact
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: ${{ github.event.workflow_run.workflow_id }}
+      - run: gh run download
 
       - name: look for downloaded artifact
         run: |
