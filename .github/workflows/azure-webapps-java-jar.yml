@@ -5,6 +5,7 @@ env:
   JAVA_VERSION: "17" #Java version to use
   DISTRIBUTION: zulu # Java distribution
   AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }} # path to your web app project
+  GH_TOKEN: ${{ github.token }}
 
 on:
   workflow_dispatch:
