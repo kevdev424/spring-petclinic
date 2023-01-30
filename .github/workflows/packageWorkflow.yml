@@ -1,10 +1,7 @@
 name: Package Pet Clinic
 
-on: 
-  push:
-    branches: [main, TDENG-340]
-  pull_request:
-    branches: [main]
+on:
+  workflow_call:
 
 jobs:   
   package:
@@ -23,7 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{matrix.java}}
-          distribution: 'adopt'
+          distribution: 'zulu'
           cache: maven
       - name: Publish package
         run: ./mvnw --batch-mode deploy
