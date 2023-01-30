@@ -12,3 +12,4 @@ jobs:
     uses: ./.github/workflows/codeql.yml
   call-deploy-workflow:
     uses: ./.github/workflows/azure-webapps-java-jar.yml
+    needs: call-build-workflow
