@@ -7,8 +7,12 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }} # path to your web app project
 
 on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
-  workflow_call:
 
 permissions:
   contents: read
@@ -23,8 +27,23 @@ jobs:
     environment: dev
 
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+
+      - name: Set up Java version
+        uses: actions/setup-java@v3.0.0
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.DISTRIBUTION }}
+          cache: "maven"
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: java-app
+          path: "${{ github.workspace }}/target/*.jar"
 
       - name: "Az CLI login"
         uses: azure/login@v1
@@ -49,7 +68,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: java-app/spring-petclinic-3.0.0-SNAPSHOT.jar
+          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/target/*.jar"
 
       # Azure logout
       - name: logout
