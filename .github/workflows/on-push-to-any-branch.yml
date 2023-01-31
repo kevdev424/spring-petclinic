@@ -7,5 +7,7 @@ on:
 jobs:
   call-build-workflow:
     uses: ./.github/workflows/maven-build.yml
+  call-publish-test-results-workflow:
+    uses: ./.github/workflows/test-results.yml
   call-codeql-workflow:
     uses: ./.github/workflows/codeql.yml
