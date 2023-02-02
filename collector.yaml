@@ -1,0 +1,84 @@
+receivers:
+  # The OTLP receiver is the most common receiver. It is the default way to send data from
+  # OpenTelemetry instrumentation libraries. Documentation on this receiver is available here:
+  # https://github.com/open-telemetry/opentelemetry-collector/tree/main/receiver/otlpreceiver#readme
+  otlp:
+    protocols:
+      # The presence of the http section enables the HTTP server on the default port (4318)
+      http:
+      # The presence of the gRPC section enables the gRPC server on the default port (4317)
+      grpc:
+  hostmetrics:
+      collection_interval: 10s
+      scrapers:
+        paging:
+          metrics:
+            system.paging.utilization:
+              enabled: true
+        cpu:
+          metrics:
+            system.cpu.utilization:
+              enabled: true
+        disk:
+        filesystem:
+          metrics:
+            system.filesystem.utilization:
+              enabled: true
+        load:
+        memory:
+        network:
+        processes:
+
+processors:
+  batch:
+    send_batch_max_size: 1000
+    send_batch_size: 100
+    timeout: 10s
+  resourcedetection:
+    detectors: [gcp, ecs, ec2, azure, system]
+
+exporters:
+  # The Datadog exporter is necessary for exporting telemetry signals to Datadog.
+  datadog:
+    
+    ## @param api - custom object - required.
+    ## Specific API configuration.
+    #
+    api:
+      ## @ param key - string - required
+      ## The Datadog API key to associate your Agent's data with your organization.
+      ## Create a new API key here: https://app.datadoghq.com/account/settings
+      #
+      key: ${env:DD_API_KEY}
+
+      ## @param site - string - optional - default: datadoghq.com
+      ## The site of the Datadog intake to send Agent data to.
+      ## Set to 'datadoghq.eu' to send data to the EU site.
+      #
+    site: datadoghq.com
+
+    ## @param metrics - custom object - optional
+    ## Metric exporter specific configuration.
+    #
+    metrics:
+      ## @param - delta_ttl - integer - optional - default: 3600
+      ## The amount of time (in seconds) that values are kept in memory for
+      ## calculating deltas for cumulative monotonic metrics.
+      #
+      delta_ttl: 3600
+
+      ## @param endpoint - string - optional
+      ## The host of the Datadog intake server to send metrics to.
+      ## If unset, the value is obtained through the `site` parameter in the `api` section.
+      #
+      endpoint: https://api.datadoghq.com
+
+    ## @param traces - custom object - optional
+    ## Trace exporter specific configuration.
+    #
+    traces:
+      ## @param endpoint - string - optional
+      ## The host of the Datadog intake server to send traces to.
+      ## If unset, the value is obtained through the `site` parameter in the `api` section.
+      #
+      endpoint: https://api.datadoghq.com
