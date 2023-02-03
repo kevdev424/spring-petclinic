@@ -18,7 +18,7 @@ param amount int = 1000
 param timeGrain string = 'Annually'
 
 @description('The start date must be first of the month in YYYY-MM-DD format. Future start date should not be more than three months. Past start date should be selected within the timegrain preiod.')
-param startDate string = '2023-02-03'
+param startDate string = '2023-02-01'
 
 @description('The end date for the budget in YYYY-MM-DD format. If not provided, we default this to 10 years from the start date.')
 param endDate string = '2024-02-03'
