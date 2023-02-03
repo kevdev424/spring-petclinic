@@ -1,0 +1,19 @@
+name: On push to main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  call-build-workflow:
+    uses: ./.github/workflows/maven-build.yml
+  call-codeql-workflow:
+    uses: ./.github/workflows/codeql.yml
+  call-deploy-workflow:
+    uses: ./.github/workflows/azure-webapps-java-jar.yml
+    needs: call-build-workflow
+    secrets: inherit
+  call-package-workflow:
+    uses: ./.github/workflows/packageWorkflow.yml
+

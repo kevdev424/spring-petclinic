@@ -1,0 +1,18 @@
+name: On PR to main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  call-build-workflow:
+    uses: ./.github/workflows/maven-build.yml
+  call-publish-test-results-workflow:
+    uses: ./.github/workflows/test-results.yml
+  call-codeql-workflow:
+    uses: ./.github/workflows/codeql.yml
+  call-deploy-workflow:
+    uses: ./.github/workflows/azure-webapps-java-jar.yml
+    needs: call-build-workflow
+    secrets: inherit
