@@ -7,7 +7,7 @@ targetScope = 'resourceGroup'
 param budgetName string = 'DemoBudget'
 
 @description('The total amount of cost or usage to track with the budget')
-param amount int = 100
+param amount int = 5
 
 @description('The time covered by a budget. Tracking of the amount will be reset based on the time grain.')
 @allowed([
@@ -24,7 +24,7 @@ param startDate string = '2023-02-01'
 param endDate string = '2024-02-03'
 
 @description('Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0.01 and 1000.')
-param threshold int = 5
+param threshold int = 100
 
 @description('The list of email addresses to send the budget notification to when the threshold is exceeded.')
 param contactEmails array = ['shane.widanagama@td.com']
