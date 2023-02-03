@@ -7,7 +7,7 @@ targetScope = 'resourceGroup'
 param budgetName string = 'DemoBudget'
 
 @description('The total amount of cost or usage to track with the budget')
-param amount int = 1000
+param amount int = 100
 
 @description('The time covered by a budget. Tracking of the amount will be reset based on the time grain.')
 @allowed([
