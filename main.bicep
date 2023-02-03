@@ -1,7 +1,7 @@
 @description('Specifies the location for resources.')
 param location string = 'eastus'
 
-targetScope = 'subscription'
+targetScope = 'resourceGroup'
 
 @description('Name of the Budget. It should be unique within a resource group.')
 param budgetName string = 'DemoBudget'
