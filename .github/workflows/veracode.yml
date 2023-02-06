@@ -1,0 +1,53 @@
+name: Veracode Scan
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  # Build the application and pull down the artifact for scanning
+  call-build-workflow:
+    uses: ./.github/workflows/maven-build.yml    
+
+  veracode-pipeline-scan:
+    # needs the build step before this job will start running
+    needs: call-build-workflow
+    runs-on: ubuntu-latest
+    name: Veracode Pipeline Scan
+    continue-on-error: true
+
+    steps:
+      # Get the compiled binary from a previous job
+      - name: Get Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: java-app
+          
+      - name: Download and Unzip the Pipeline Scanner
+        run: |
+          curl -sSO https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+          unzip -o pipeline-scan-LATEST.zip
+          
+      - name: Run Pipeline Scanner
+        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VID}}" --veracode_api_key "${{secrets.VKEY}}" --file "${{ github.workspace }}/target/*.jar" -id "true" -jf "results.json" 
+      
+  results_to_sarif:
+    needs: veracode-pipeline-scan
+    runs-on: self-hosted
+      
+    name: import pipeline results to sarif
+    steps:
+      - name: Convert pipeline scan output to SARIF format
+        id: convert
+        uses: Veracode/veracode-pipeline-scan-results-to-sarif@v1.0.5
+        with:
+          pipeline-results-json: results.json
+          output-results-sarif: veracode-results.sarif
+          source-base-path-1: "^com/veracode:src/main/java/com/veracode"
+          source-base-path-2: "^WEB-INF:src/main/webapp/WEB-INF"
+          finding-rule-level: "3:1:0"
+
+      - name: upload sarif file to repository
+        uses: github/codeql-action/upload-sarif@v2
+        with: # Path to SARIF file relative to the root of the repository
+          sarif_file: veracode-results.sarif
