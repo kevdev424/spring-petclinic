@@ -35,12 +35,12 @@ import java.util.stream.Stream;
 
 public class Opentelemetry {
 	private static void initOpenTelemetry() {
-		Resource serviceName = Optional.ofNullable(System.getenv("OTEL_SERVICE_NAME"))
+		Resource serviceName = Optional.ofNullable(System.getenv("spring-petclinic"))
 			.map(n -> Attributes.of(AttributeKey.stringKey("service.name"), n))
 			.map(Resource::create)
 			.orElseGet(Resource::empty);
 
-		Resource envResourceAttributes = Resource.create(Stream.of(Optional.ofNullable(System.getenv("OTEL_RESOURCE_ATTRIBUTES")).orElse("").split(","))
+		Resource envResourceAttributes = Resource.create(Stream.of(Optional.ofNullable(System.getenv("service.name=spring-petclinic,service.version=1.0.1")).orElse("").split(","))
 			.filter(pair -> pair != null && pair.length() > 0 && pair.contains("="))
 			.map(pair -> pair.split("="))
 			.filter(pair -> pair.length == 2)
@@ -93,7 +93,7 @@ public class Opentelemetry {
 			.extract(Context.current(), httpExchange, getter);
 		try (Scope scope = extractedContext.makeCurrent()) {
 			//This will automatically propagate context by creating child spans within the extracted context
-			Span serverSpan = tracer.spanBuilder("my-server-span") //TODO Replace with the name of your span
+			Span serverSpan = tracer.spanBuilder("petclinic-span") //TODO Replace with the name of your span
 				.setSpanKind(SpanKind.SERVER) //TODO Set the kind of your span
 				.startSpan();
 			serverSpan.setAttribute(SemanticAttributes.HTTP_METHOD, "GET"); //TODO Add attributes
@@ -133,7 +133,7 @@ public class Opentelemetry {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
-		Span outGoing = tracer.spanBuilder("my-client-span") //TODO Replace with the name of your span
+		Span outGoing = tracer.spanBuilder("petclinic-client-span") //TODO Replace with the name of your span
 			.setSpanKind(SpanKind.CLIENT) //TODO Set the kind of your span
 			.startSpan();
 		try (Scope scope = outGoing.makeCurrent()) {
