@@ -1,6 +1,9 @@
 name: Generate Service Principal
 
 on:
+  push:
+    branches:
+      - shane-generate-service-principal
   workflow_dispatch:
 
 permissions:
