@@ -29,7 +29,7 @@ jobs:
           unzip -o pipeline-scan-LATEST.zip
           
       - name: Run Pipeline Scanner
-        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{ secrets.VID }}" --veracode_api_key "${{ secrets.VKEY }}" --file "${{ github.workspace }}/insecure-bank.war" -id "true" -jf "results.json" 
+        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{ secrets.VID }}" --veracode_api_key "${{ secrets.VKEY }}" --file "${{ github.workspace }}/target/*.jar" -id "true" -jf "results.json" 
         continue-on-error: true
         
       - name: Upload artifact for deployment job
