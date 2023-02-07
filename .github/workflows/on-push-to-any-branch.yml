@@ -1,7 +1,7 @@
 name: On push to any branch
 
 on:
-  pull_request:
+  push:
     branches: [ '**' ]
 
 jobs:
