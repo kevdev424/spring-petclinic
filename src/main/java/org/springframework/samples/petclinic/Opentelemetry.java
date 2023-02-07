@@ -34,6 +34,7 @@ import java.util.Properties;
 import java.util.stream.Stream;
 
 public class Opentelemetry {
+	// The initOpenTelemetry() method initializes OpenTelemetry and sets up a tracer provider and an exporter to send spans to Datadog. 
 	private static void initOpenTelemetry() {
 		Resource serviceName = Optional.ofNullable(System.getenv("spring-petclinic"))
 			.map(n -> Attributes.of(AttributeKey.stringKey("service.name"), n))
@@ -77,7 +78,7 @@ public class Opentelemetry {
 			.buildAndRegisterGlobal();
 		Runtime.getRuntime().addShutdownHook(new Thread(sdkTracerProvider::close));
 	}
-
+	// The init() method calls initOpenTelemetry() to initialize OpenTelemetry.
 	public void init() {
 		initOpenTelemetry();
 	}
@@ -86,7 +87,8 @@ public class Opentelemetry {
 		.getTracerProvider()
 		.tracerBuilder("petclinic") //TODO Replace with the name of your tracer
 		.build();
-
+	
+	// The handle() method is used to handle incoming requests and extract the SpanContext from the request. 
 	public void handle(HttpExchange httpExchange) {
 		//Extract the SpanContext and other elements from the request
 		Context extractedContext = GlobalOpenTelemetry.getPropagators().getTextMapPropagator()
@@ -102,6 +104,7 @@ public class Opentelemetry {
 	}
 
 	//The getter will be used for incoming requests
+	//The getter and setter methods are used to extract and inject the context from incoming and outgoing requests respectively. 
 	TextMapGetter<HttpExchange> getter =
 		new TextMapGetter<>() {
 			@Override
@@ -125,7 +128,7 @@ public class Opentelemetry {
 			// Insert the context as Header
 			carrier.setRequestProperty(key, value);
 		};
-
+	// The makeOutgoingRequest() method is used to make outgoing requests and inject the current Context into the request.
 	public void makeOutgoingRequest() {
 		URL url = null; //TODO Replace with the URL of the service to be called
 		try {
