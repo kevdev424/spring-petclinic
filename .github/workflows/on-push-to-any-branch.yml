@@ -1,6 +1,9 @@
 name: On push to any branch
 
 on:
+  push:
+    branches:
+      - shane-generate-service-principal
   pull_request:
     branches: [ '**' ]
 
