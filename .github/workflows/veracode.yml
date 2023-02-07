@@ -1,27 +1,27 @@
 name: Veracode Scan
 
 on:
-  push:
-    branches: [ "main" ]
-
+  workflow_call:
+  
+permissions:
+  security-events: write
+  
 jobs:
-  # Build the application and pull down the artifact for scanning
-  call-build-workflow:
-    uses: ./.github/workflows/maven-build.yml    
 
   veracode-pipeline-scan:
     # needs the build step before this job will start running
-    needs: call-build-workflow
     runs-on: ubuntu-latest
     name: Veracode Pipeline Scan
-    continue-on-error: true
 
     steps:
-      # Get the compiled binary from a previous job
+        # Get the compiled binary from a previous job
       - name: Get Artifact
         uses: actions/download-artifact@v3
         with:
           name: java-app
+          
+#       - name: extract file from tar
+#         run: tar -xvf java-app.tar
           
       - name: Download and Unzip the Pipeline Scanner
         run: |
@@ -29,14 +29,28 @@ jobs:
           unzip -o pipeline-scan-LATEST.zip
           
       - name: Run Pipeline Scanner
-        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VID}}" --veracode_api_key "${{secrets.VKEY}}" --file "${{ github.workspace }}/target/*.jar" -id "true" -jf "results.json" 
-      
+        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{ secrets.VID }}" --veracode_api_key "${{ secrets.VKEY }}" --file "${{ github.workspace }}/insecure-bank.war" -id "true" -jf "results.json" 
+        continue-on-error: true
+        
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: veracode_results
+          path: "${{ github.workspace }}/results.json"
+          
   results_to_sarif:
     needs: veracode-pipeline-scan
-    runs-on: self-hosted
-      
+    runs-on: ubuntu-latest
+
     name: import pipeline results to sarif
     steps:
+    
+        # Grab the SARIF file from previous Job
+      - name: Get SARIF
+        uses: actions/download-artifact@v3
+        with:
+          name: veracode_results
+          
       - name: Convert pipeline scan output to SARIF format
         id: convert
         uses: Veracode/veracode-pipeline-scan-results-to-sarif@v1.0.5
