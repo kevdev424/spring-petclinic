@@ -11,3 +11,5 @@ jobs:
     uses: ./.github/workflows/test-results.yml
   call-codeql-workflow:
     uses: ./.github/workflows/codeql.yml
+  call-veracode-workflow:
+    uses: ./.github/workflows/veracode.yml
