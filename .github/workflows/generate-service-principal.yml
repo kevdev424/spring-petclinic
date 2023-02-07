@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  sp:
     permissions:
       id-token: write
       contents: none
@@ -15,11 +15,11 @@ jobs:
 
     steps:
       - name: "Az CLI login"
-          uses: azure/login@v1
-          with:
-            client-id: ${{ secrets.AZURE_CLIENT_ID }}
-            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - run: |
           subscriptionID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
