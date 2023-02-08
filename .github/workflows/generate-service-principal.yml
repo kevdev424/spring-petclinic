@@ -30,5 +30,7 @@ jobs:
 
       - run: |
           subscriptionID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          az ad sp create-for-rbac --scopes /subscriptions/$subscriptionID
+          az ad sp create-for-rbac --name petclinicServicePrincipal \
+                                   --role contributor \
+                                   --scopes /subscriptions/$subscriptionID/resourceGroups/td-petclinic-rg
           
