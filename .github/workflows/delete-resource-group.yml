@@ -1,0 +1,31 @@
+name: Delete Resource Group
+
+on:
+  workflow_call:
+  schedule:
+    - cron: '0 0 * * *'
+        
+permissions:
+  contents: read
+    
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    environment: dev
+        
+    steps:
+      - uses: actions/checkout@v3
+            
+      - name: Azure CLI Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+                
+      - name: Delete resource group
+        run: az delete -n td-petclinic-rg
+              
+      - name: Logout
+        run: |
+          az logout
