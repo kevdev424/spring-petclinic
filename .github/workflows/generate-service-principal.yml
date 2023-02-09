@@ -29,9 +29,11 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - run: |
-          az role assignment list --all
-          az role assignment list
-          az role assignment list --resource-group td-petclinic-rg
-           az role assignment list --all 'true'
-          
+          az ad sp list --all
+          subscriptionID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          az ad sp create-for-rbac --name petclinicServicePrincipal \
+                                   --role reader \
+                                   --scopes /subscriptions/$subscriptionID/resourceGroups/td-petclinic-rg \
+                                   --debug \
+                                   --verbose
           
