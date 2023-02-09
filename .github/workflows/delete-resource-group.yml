@@ -1,9 +1,6 @@
 name: Delete Resource Group
 
 on:
-  push:
-    branches:
-      - eston-delete-rg-workflow
   workflow_call:
   schedule:
     - cron: '0 0 * * *'
