@@ -32,5 +32,7 @@ jobs:
           subscriptionID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az ad sp create-for-rbac --name petclinicServicePrincipal \
                                    --role reader \
-                                   --scopes /subscriptions/$subscriptionID/resourceGroups/td-petclinic-rg
+                                   --scopes /subscriptions/$subscriptionID/resourceGroups/td-petclinic-rg \
+                                   --create-cert
+          
           
