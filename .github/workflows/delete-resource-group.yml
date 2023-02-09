@@ -1,6 +1,9 @@
 name: Delete Resource Group
 
 on:
+  push:
+    branches:
+      - eston-delete-rg-workflow
   workflow_call:
   schedule:
     - cron: '0 0 * * *'
@@ -24,7 +27,12 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Delete resource group
-        run: az group delete -n td-petclinic-rg
+        run: |
+          if [$(az group exists -n td-petclinic-rg) = true]; then
+            az group delete -n td-petclinic-rg -y
+          else
+            echo "resource group does not exist"
+          fi
               
       - name: Logout
         run: |
