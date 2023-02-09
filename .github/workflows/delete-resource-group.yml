@@ -32,7 +32,7 @@ jobs:
 
       - name: Delete resource group
         run: |
-          if [$(az group exists -n td-petclinic-rg) = true]; then
+          if [ $(az group exists -n td-petclinic-rg) = true ]; then
             az group delete -n td-petclinic-rg -y
           else
             echo "resource group does not exist"
