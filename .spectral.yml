@@ -1,1 +1,2 @@
+#spectral linting ruleset https://meta.stoplight.io/docs/spectral/01baf06bdd05a-create-a-ruleset
 extends: ["spectral:oas"]
