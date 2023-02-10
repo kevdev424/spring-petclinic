@@ -20,4 +20,4 @@ jobs:
       - uses: stoplightio/spectral-action@latest
         with:
           file_glob: '*/*.yaml'
-          config_file: '.spectral.yml'
+          spectral_ruleset: '.spectral.yml'
