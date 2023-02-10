@@ -2,12 +2,12 @@ name: Generate Service Principal
 
 env:
   SP: |
-    {
+    "{
       "appId": "b3e718a0-213b-4c5f-9eb2-ce66635c5eb4",
       "displayName": "petclinicServicePrincipal",
       "password": "Wf98Q~UFKnCSkIKtOAUTkJp9OA1HCQm3L0vhScPH",
       "tenant": "83a73621-e992-49bb-9032-95101904d8d6"
-    }
+    }"
 
 on:
   push:
