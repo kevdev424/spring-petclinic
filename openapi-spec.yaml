@@ -63,20 +63,3 @@ components:
           type: string
         type:
           type: string
-
-# Ruleset
-rules:
-  - description: No empty name and type fields
-    condition:
-      path:
-        - components/schemas/NewPet/required
-      operator: eq
-      value:
-        - name
-        - type
-  - description: All fields must have a valid type
-    condition:
-      path:
-        - components/schemas/NewPet/properties/*/type
-      operator: ne
-      value: ""
