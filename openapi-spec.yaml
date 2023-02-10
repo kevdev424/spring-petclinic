@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: spring-petclinic OpenAPI
+  description: This is the OpenAPI for spring-peclinic
+  version: 1.0.0
+
+paths:
+  /pets:
+    get:
+      summary: List all pets
+      operationId: listPets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+    post:
+      summary: Create a pet
+      operationId: createPet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPet'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+        - type
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        type:
+          type: string
+    NewPet:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+
+# Ruleset
+rules:
+  - description: No empty name and type fields
+    condition:
+      path:
+        - components/schemas/NewPet/required
+      operator: eq
+      value:
+        - name
+        - type
+  - description: All fields must have a valid type
+    condition:
+      path:
+        - components/schemas/NewPet/properties/*/type
+      operator: ne
+      value: ""
