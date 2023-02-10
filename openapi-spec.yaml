@@ -3,6 +3,9 @@ info:
   title: spring-petclinic OpenAPI
   description: This is the OpenAPI for spring-peclinic
   version: 1.0.0
+  
+servers:
+  url: http:localhost:8080
 
 paths:
   /pets:
