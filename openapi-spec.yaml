@@ -63,9 +63,12 @@ components:
           type: string
         type:
           type: string
+          
 x-ruleset:
   - name: simple OAS3 rules
     description: A set of simple rules for OAS3 documents
+    extends:
+      - https://stoplight.io/p/oas3
     rules:
       - name: Require titles
         description: All OpenAPI documents must include a title
