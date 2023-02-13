@@ -1,10 +1,5 @@
 name: Generate Service Principal
 
-env:
-  SP_PWD: "Wf98Q~UFKnCSkIKtOAUTkJp9OA1HCQm3L0vhScPH"
-  SP_TENANT: "83a73621-e992-49bb-9032-95101904d8d6"
-  SP_APP_ID: "b3e718a0-213b-4c5f-9eb2-ce66635c5eb4"
-
 on:
   push:
     branches:
@@ -27,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: "Azure CLI Login"
-        run: az login --service-principal -u ${{ env.SP_APP_ID }} -p ${{ env.SP_PWD }} --tenant ${{ env.SP_TENANT }}
+        run: az login --service-principal -u ${{ secrets.SP_APP_ID }} -p ${{ secrets.SP_PWD }} --tenant ${{ secrets.SP_TENANT }}
 
       - run: |
           subscriptionID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
