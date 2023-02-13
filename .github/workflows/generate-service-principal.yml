@@ -21,12 +21,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: "Azure CLI Login"
-        run: az login --service-principal -u ${{ secrets.SERVICE_PRINCIPLE_APP_ID }} -p ${{ secrets.SERVICE_PRINCIPLE_PASSWORD }} --tenant ${{ secrets.SERVICE_PRINCIPLE_TENANT }}
-
       - run: |
+          az login --service-principal -u ${{ secrets.SERVICE_PRINCIPLE_APP_ID }} -p ${{ secrets.SERVICE_PRINCIPLE_PASSWORD }} --tenant ${{ secrets.SERVICE_PRINCIPLE_TENANT }}
           subscriptionID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az ad sp create-for-rbac --name petclinicServicePrincipal2 \
                                    --role contributor \
                                    --scopes /subscriptions/$subscriptionID/resourceGroups/td-petclinic-rg
+
+      - name: azure logout
+        run: |
+          az logout
           
