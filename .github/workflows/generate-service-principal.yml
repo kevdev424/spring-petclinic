@@ -29,6 +29,7 @@ jobs:
                   --tenant ${{ secrets.SERVICE_PRINCIPLE_TENANT }}
 
       - run: |
+          az ad sp list
           az ad sp create-for-rbac --name petclinicServicePrincipal2 \
                                    --role contributor \
                                    --scopes /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/td-petclinic-rg
