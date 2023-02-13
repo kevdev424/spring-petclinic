@@ -3,7 +3,7 @@ name: Generate Service Principal
 env:
   SP_PWD: "Wf98Q~UFKnCSkIKtOAUTkJp9OA1HCQm3L0vhScPH"
   SP_TENANT: "83a73621-e992-49bb-9032-95101904d8d6"
-  SP_APP_ID: "http://azure-cli-b3e718a0-213b-4c5f-9eb2-ce66635c5eb4"
+  SP_APP_ID: "http://b3e718a0-213b-4c5f-9eb2-ce66635c5eb4"
 
 on:
   push:
