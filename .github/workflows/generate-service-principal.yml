@@ -21,10 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: azure logout 1
-        run: |
-          az logout
-
       - name: azure login --verbose --debug
         run: |
           az cache purge
