@@ -21,8 +21,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: azure logout 1
+        run: |
+          az logout
+
       - name: azure login
         run: |
+          az cache purge
           az login --service-principal \
                   -u ${{ secrets.SERVICE_PRINCIPLE_APP_ID }} \
                   -p ${{ secrets.SERVICE_PRINCIPLE_PASSWORD }} \
