@@ -25,7 +25,7 @@ jobs:
         run: |
           az logout
 
-      - name: azure login
+      - name: azure login --verbose --debug
         run: |
           az cache purge
           az login --service-principal \
