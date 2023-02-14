@@ -1,8 +1,5 @@
 name: Generate Service Principal
 
-env:
-  BLANK_SP_APP_ID: ""
-
 on:
   push:
     branches:
@@ -27,7 +24,7 @@ jobs:
       - name: azure login --verbose --debug
         run: |
           az login --service-principal \
-                  -u ${{ env.BLANK_SP_APP_ID }} \
+                  -u \
                   -p ${{ secrets.SERVICE_PRINCIPLE_PASSWORD }} \
                   --tenant ${{ secrets.SERVICE_PRINCIPLE_TENANT }}
 
