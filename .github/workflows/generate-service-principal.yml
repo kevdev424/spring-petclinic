@@ -1,0 +1,39 @@
+name: Generate Service Principal
+
+on:
+  push:
+    branches:
+      - shane-generate-service-principal
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  sp:
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: azure login
+        run: |
+          az login --service-principal \
+                  -u ${{ secrets.SERVICE_PRINCIPLE_APP_ID }} \
+                  -p ${{ secrets.SERVICE_PRINCIPLE_PASSWORD }} \
+                  --tenant ${{ secrets.SERVICE_PRINCIPLE_TENANT }}
+
+      - name: create azure active directory app registration
+        run: |
+          az ad app create --display-name devx-spring-petclinic
+
+      - name: azure logout
+        run: |
+          az logout
+
+          
