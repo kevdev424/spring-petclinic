@@ -24,7 +24,7 @@ jobs:
       - name: azure login --verbose --debug
         run: |
           az login --service-principal \
-                  -u \
+                  -u ${{ secrets.SERVICE_PRINCIPLE_APP_ID }} \
                   -p ${{ secrets.SERVICE_PRINCIPLE_PASSWORD }} \
                   --tenant ${{ secrets.SERVICE_PRINCIPLE_TENANT }}
 
