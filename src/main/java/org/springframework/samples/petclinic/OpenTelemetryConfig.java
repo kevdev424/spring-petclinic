@@ -20,7 +20,7 @@ public class OpenTelemetryConfig {
 
 
 		OtlpGrpcSpanExporter otlpExporter = OtlpGrpcSpanExporter.builder()
-			.setEndpoint("http://englab-tdbank.datadoghq.com")
+			.setEndpoint("http://datadoghq.com")
 			.addHeader("DD-APPLICATION-KEY", "${{ secrets.DATADOG_APP_KEY  }}")
 			.addHeader("DD-API-KEY","${{ secrets.DATADOG_API_KEY }}")
 			.setCompression("gzip")
