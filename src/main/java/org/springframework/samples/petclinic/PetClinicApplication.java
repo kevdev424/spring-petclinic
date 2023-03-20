@@ -25,9 +25,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
-import java.net.URI;
-import java.net.http.HttpRequest;
-
 
 /**
  * PetClinic Spring Boot Application.
@@ -48,10 +45,6 @@ public class PetClinicApplication implements CommandLineRunner {
 		OpenTelemetrySdk openTelemetrySdk = OpenTelemetryConfig.setup();
 
 		Tracer tracer = openTelemetrySdk.getTracer("MainClass");
-<<<<<<< HEAD
-=======
-		System.out.println(tracer);
->>>>>>> e24d27ce2bfb5233d874958d1c601da0c8bd8e4a
 		Span mySpan = tracer.spanBuilder("My Span").startSpan();
 		mySpan.setAttribute("Attribute 1", "Value 1");
 		mySpan.setAttribute("Attribute 2", "Value 2");
