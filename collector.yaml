@@ -8,18 +8,9 @@ receivers:
     collection_interval: 10s
     scrapers:
       paging:
-        metrics:
-          system.paging.utilization:
-            enabled: true
       cpu:
-        metrics:
-          system.cpu.utilization:
-            enabled: true
       disk:
       filesystem:
-        metrics:
-          system.filesystem.utilization:
-            enabled: true
       load:
       memory:
       network:
@@ -37,7 +28,7 @@ receivers:
     include_file_path: true
     poll_interval: 500ms
     include:
-      - /var/log/**/*example*/*.log
+      - /var/log/**/*.log
 
 processors:
   batch:
@@ -51,6 +42,7 @@ exporters:
       site: <DD_SITE>
       key: ${env:DD_API_KEY}
 
+
 service:
   pipelines:
     metrics:
@@ -61,7 +53,5 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [datadog]
-    logs:
-      receivers: [otlp, filelog]
-      processors: [batch]
-      exporters: [datadog]
+
+
