@@ -42,16 +42,6 @@
   </dependencyManagement>
 
   <dependencies>
-  <dependency>
-    <groupId>io.opentelemetry.instrumentation</groupId>
-    <artifactId>opentelemetry-spring-boot-starter</artifactId>
-    <version>1.9.1</version>
-  </dependency>
-  <dependency>
-    <groupId>io.opentelemetry.extension</groupId>
-    <artifactId>opentelemetry-extension-annotations</artifactId>
-    <version>1.9.1</version>
-  </dependency>
     <dependency>
       <groupId>net.logstash.logback</groupId>
       <artifactId>logstash-logback-encoder</artifactId>
