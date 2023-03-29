@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <include resource="org/springframework/boot/logging/logback/base.xml" />
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-      <providers>
-        <timestamp>
-          <timeZone>UTC</timeZone>
-        </timestamp>
-        <pattern>
-          <pattern>
-            {
-              "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSS'Z',UTC}",
-              "severity": "%level",
-              "thread": "%thread",
-              "logger": "%logger",
-              "message": "%message",
-              "traceId": "%mdc{x-b3-traceid}",
-              "spanId": "%mdc{x-b3-spanid}"
-            }
-          </pattern>
-        </pattern>
-      </providers>
-    </encoder>
-  </appender>
-  <root level="INFO">
-    <appender-ref ref="STDOUT" />
-  </root>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSS'Z', UTC}",
+                        "severity": "%level",
+                        "service": "spring-petclinic",
+                        "logger": "%logger",
+                        "message": "%message",
+                        "thread": "%thread",
+                        "trace_id": "%X{traceId}",
+                        "span_id": "%X{spanId}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="jsonConsoleAppender" />
+    </root>
 </configuration>
