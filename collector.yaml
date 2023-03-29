@@ -24,20 +24,23 @@ receivers:
           static_configs:
             - targets: ['0.0.0.0:8888']
 
-    filelog:
-    include:
-      - ./logs/spring-petclinic.log
-    start_at: end
-    poll_interval: 500ms
-    encoding: utf-8
-    include_file_path: true
-    include_file_name: false
-    include_directory_path: false
-    multiline:
-      line_start_pattern: '^{'
-    operators:
-      - id: json_parser
-        type: json_parser
+filelog:
+  include:
+    - ./logs/spring-petclinic.log
+  start_at: end
+  poll_interval: 500ms
+  operators:
+    - id: parse_log
+      type: json_parser
+      parse_from: message
+    - id: trace
+      type: tracer_parser
+      trace_id:
+        parse_from: traceId
+      span_id:
+        parse_from: spanId
+  attributes:
+    ddtags: env:staging
 
 processors:
   batch:
