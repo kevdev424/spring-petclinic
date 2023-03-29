@@ -24,17 +24,32 @@ receivers:
           static_configs:
             - targets: ['0.0.0.0:8888']
 
-  filelog:
-    include:
-      - /path/to/your/logs/spring-petclinic.log
-    parsers:
-      - name: json_parser
-        type: json
-        encoding: utf-8
-    operators:
-      - id: json_parser
-        type: parser
-        parser: json_parser
+filelog:
+  include:
+    - ./logs/spring-petclinic.log
+  start_at: end
+  poll_interval: 500ms
+  operators:
+    - id: parse_log
+      type: regex_parser
+      regex: '^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (?P<level>\w+) (?P<logger>\S+) (?P<trace_id>[a-f\d]{32}) (?P<span_id>[a-f\d]{16}) - (?P<message>.*)$'
+      timestamp:
+        parse_from: timestamp
+        layout: '%Y-%m-%d %H:%M:%S'
+      severity:
+        parse_from: level
+      attributes:
+        logger: logger
+        message: message
+    - id: add_trace_and_span_ids
+      type: metadata
+      attributes:
+        dd.trace_id:
+          parse_from: trace_id
+        dd.span_id:
+          parse_from: span_id
+  attributes:
+    ddtags: env:staging
 
 processors:
   batch:
