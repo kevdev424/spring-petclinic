@@ -24,11 +24,20 @@ receivers:
           static_configs:
             - targets: ['0.0.0.0:8888']
 
-  filelog:
-    include_file_path: true
-    poll_interval: 500ms
+    filelog:
     include:
-      - /var/log/**/*.log
+      - ./logs/spring-petclinic.log
+    start_at: end
+    poll_interval: 500ms
+    encoding: utf-8
+    include_file_path: true
+    include_file_name: false
+    include_directory_path: false
+    multiline:
+      line_start_pattern: '^{'
+    operators:
+      - id: json_parser
+        type: json_parser
 
 processors:
   batch:
