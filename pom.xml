@@ -47,6 +47,14 @@
       <artifactId>logstash-logback-encoder</artifactId>
       <version>7.3</version>
     </dependency>
+    
+    
+    <dependency>
+      <groupId>com.datadoghq</groupId>
+      <artifactId>dd-java-agent</artifactId>
+      <version>0.89.0</version>
+      <scope>runtime</scope>
+    </dependency>
 
     <dependency>
       <groupId>ch.qos.logback</groupId>
