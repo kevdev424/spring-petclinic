@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="otel" class="io.opentelemetry.exporter.logging.LoggingExporter">
     <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
       <providers>
         <timestamp>
@@ -24,6 +25,6 @@
   </appender>
 
   <root level="info">
-    <appender-ref ref="STDOUT" />
+    <appender-ref ref="otel"/>
   </root>
 </configuration>
