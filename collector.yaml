@@ -1,8 +1,8 @@
 receivers:
   otlp:
     protocols:
-      http:
-      grpc:
+      http: {}
+      grpc: {}
   # The hostmetrics receiver is required to get correct infrastructure metrics in Datadog.
   hostmetrics:
     collection_interval: 10s
@@ -24,33 +24,6 @@ receivers:
           static_configs:
             - targets: ['0.0.0.0:8888']
 
-filelog:
-  include:
-    - ./logs/spring-petclinic.log
-  start_at: end
-  poll_interval: 500ms
-  operators:
-    - id: parse_log
-      type: regex_parser
-      regex: '^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (?P<level>\w+) (?P<logger>\S+) (?P<trace_id>[a-f\d]{32}) (?P<span_id>[a-f\d]{16}) - (?P<message>.*)$'
-      timestamp:
-        parse_from: timestamp
-        layout: '%Y-%m-%d %H:%M:%S'
-      severity:
-        parse_from: level
-      attributes:
-        logger: logger
-        message: message
-    - id: add_trace_and_span_ids
-      type: metadata
-      attributes:
-        dd.trace_id:
-          parse_from: trace_id
-        dd.span_id:
-          parse_from: span_id
-  attributes:
-    ddtags: env:staging
-
 processors:
   batch:
     send_batch_max_size: 100
@@ -60,8 +33,24 @@ processors:
 exporters:
   datadog:
     api:
-      site: <DD_SITE>
-      key: ${env:DD_API_KEY}
+      site: datadoghq.com
+      key: your_api_key
+    host_metadata:
+      enabled: true
+      hostname_source: first_resource
+      tags: spring-petclinic
+  exporters:
+    otlphttp:
+      endpoint: https://example.com:4318
+      headers:
+        api-key: "your_api_key"
+      tls:
+        insecure: false
+        # Other TLS settings if needed, e.g., ca_file, cert_file, key_file, etc.
+      timeout: 30s
+      read_buffer_size: 0
+      write_buffer_size: 524288
+      compression: gzip
 
 
 service:
@@ -74,5 +63,7 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [datadog]
-
-
+    logs:
+      receivers: [otlp]
+      processors: [ batch]
+      exporters: [datadog]
