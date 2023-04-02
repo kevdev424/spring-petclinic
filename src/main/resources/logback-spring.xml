@@ -1,30 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-  <appender name="otel" class="io.opentelemetry.exporter.logging.LoggingExporter">
+<appender name="DATADOG_HTTP" class="com.example.DatadogHttpAppender">
     <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-      <providers>
-        <timestamp>
-          <timeZone>UTC</timeZone>
-        </timestamp>
-        <logLevel/>
-        <loggerName/>
-        <pattern>
-          <pattern>
-            {
-              "otel_trace_id": "%X{trace_id}",
-              "otel_span_id": "%X{span_id}"
-            }
-          </pattern>
-        </pattern>
-        <threadName/>
-        <message/>
-        <logstashMarkers/>
-        <stackTrace/>
-      </providers>
+        <providers>
+            <timestamp>
+                <timeZone>UTC</timeZone>
+            </timestamp>
+            <pattern>
+                <pattern>
+                    {
+                        "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSS'Z',UTC}",
+                        "severity": "%level",
+                        "service": "${springAppName:-}",
+                        "logger": "%logger",
+                        "message": "%message",
+                        "thread": "%thread",
+                        "exception": "%ex{short}"
+                    }
+                </pattern>
+            </pattern>
+        </providers>
     </encoder>
-  </appender>
-
-  <root level="info">
-    <appender-ref ref="otel"/>
-  </root>
-</configuration>
+    <apiKey>YOUR_DATADOG_API_KEY</apiKey>
+</appender>
