@@ -1,13 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO" packages="com.example">
-    <Appenders>
-        <Http name="Http" url="https://http-intake.logs.datadoghq.com/v1/input/YOUR_API_KEY_HERE">
-            <JsonLayout compact="true" eventEol="true"/>
-        </Http>
-    </Appenders>
-    <Loggers>
-        <Root level="info">
-            <AppenderRef ref="Http"/>
-        </Root>
-    </Loggers>
-</Configuration>
+<configuration>
+  <appender name="datadog" class="your.package.DatadogHttpLogAppender">
+    <apiKey>YOUR_DATADOG_API_KEY</apiKey>
+  </appender>
+  <root level="INFO">
+    <appender-ref ref="datadog"/>
+  </root>
+</configuration>
