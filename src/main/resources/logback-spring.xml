@@ -1,45 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
-
-    <springProfile name="!production">
-        <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="production">
-        <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>/var/log/pods/services/petclinic/0.log</file>
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>/var/log/pods/services/petclinic/%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
-                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>10MB</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
-            </rollingPolicy>
-            <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-                <providers>
-                    <timestamp>
-                        <timeZone>UTC</timeZone>
-                    </timestamp>
-                    <pattern>
-                        <pattern>
-                            {
-                                "level": "%level",
-                                "message": "%message",
-                                "service": "petclinic",
-                                "span_id": "%X{spanId}",
-                                "trace_id": "%X{traceId}"
-                            }
-                        </pattern>
-                    </pattern>
-                </providers>
-            </encoder>
-        </appender>
-
-        <root level="INFO">
-            <appender-ref ref="JSON_FILE"/>
-        </root>
-    </springProfile>
+  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+  <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp>
+          <timeZone>UTC</timeZone>
+        </timestamp>
+        <pattern>
+          <pattern>
+            {
+              "level": "%level",
+              "logger": "%logger",
+              "message": "%message",
+              "service": "petclinic",
+              "span_id": "%X{spanId}",
+              "trace_id": "%X{traceId}",
+              "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
+              "thread": "%thread"
+            }
+          </pattern>
+        </pattern>
+      </providers>
+    </encoder>
+  </appender>
+  <root level="INFO">
+    <appender-ref ref="JSON_CONSOLE"/>
+  </root>
 </configuration>
