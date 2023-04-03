@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-  <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
-        <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
-          <prettyPrint>false</prettyPrint>
-        </jsonFormatter>
-        <timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSX</timestampFormat>
-        <timestampFormatTimezoneId>Etc/UTC</timestampFormatTimezoneId>
-        <appendLineSeparator>true</appendLineSeparator>
-        <includeLevel>true</includeLevel>
-        <includeThreadName>false</includeThreadName>
-        <includeMDC>true</includeMDC>
-        <includeLoggerName>true</includeLoggerName>
-        <includeFormattedMessage>true</includeFormattedMessage>
-      </layout>
-    </encoder>
-  </appender>
+    <springProfile name="!production">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
 
-  <root level="INFO">
-    <appender-ref ref="JSON" />
-  </root>
+    <springProfile name="production">
+        <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/var/log/pods/services/petclinic/0.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/var/log/pods/services/petclinic/%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+                <providers>
+                    <timestamp>
+                        <timeZone>UTC</timeZone>
+                    </timestamp>
+                    <pattern>
+                        <pattern>
+                            {
+                                "level": "%level",
+                                "message": "%message",
+                                "service": "petclinic",
+                                "span_id": "%X{spanId}",
+                                "trace_id": "%X{traceId}"
+                            }
+                        </pattern>
+                    </pattern>
+                </providers>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="JSON_FILE"/>
+        </root>
+    </springProfile>
 </configuration>
