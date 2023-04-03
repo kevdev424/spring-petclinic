@@ -1,35 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./logs/spring-petclinic.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>./logs/spring-petclinic-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <fieldName>timestamp</fieldName>
-                    <pattern>yyyy-MM-dd'T'HH:mm:ss.SSSX</pattern>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <logLevel>
-                    <fieldName>level</fieldName>
-                </logLevel>
-                <loggerName>
-                    <fieldName>logger</fieldName>
-                </loggerName>
-                <thread>
-                    <fieldName>thread</fieldName>
-                </thread>
-                <message>
-                    <fieldName>message</fieldName>
-                </message>
-            </providers>
-        </encoder>
-    </appender>
-    <root level="INFO">
-        <appender-ref ref="JSON_FILE"/>
-    </root>
+  <appender name="datadog" class="com.datadoghq.logback.DatadogHttpLogAppender">
+    <apiKey>YOUR_DATADOG_API_KEY</apiKey>
+  </appender>
+  <root level="INFO">
+    <appender-ref ref="datadog"/>
+  </root>
 </configuration>
