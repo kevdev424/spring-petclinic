@@ -1,39 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<include resource="org/springframework/boot/logging/logback/base.xml"/>
-	<appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-			<providers>
-				<timestamp>
-					<timeZone>UTC</timeZone>
-				</timestamp>
-				<pattern>
-					<pattern>
-						{"level": "%level", "logger": "%logger", "message": "%message", "service": "petclinic", "span_id": "%X{spanId}", "trace_id": "%X{traceId}", "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}", "thread": "%thread"}
-					</pattern>
-				</pattern>
-			</providers>
-		</encoder>
-	</appender>
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>logs/app.log</file>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+  </appender>
+  
+  <appender name="JSON_TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <destination>intake.logs.datadoghq.com:10516</destination>
+    <keepAliveDuration>20 seconds</keepAliveDuration>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        <prefix class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern><YOUR_DD_API_KEY> %mdc{keyThatDoesNotExist}</pattern>
+            </layout>
+        </prefix>
+    </encoder>
+    <ssl />
+  </appender>
 
-	<appender name="JSON_FILE" class="ch.qos.logback.core.FileAppender">
-		<file>./log/spring-petclinic.log</file>
-		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-			<providers>
-				<timestamp>
-					<timeZone>UTC</timeZone>
-				</timestamp>
-				<pattern>
-					<pattern>
-						{"level": "%level", "logger": "%logger", "message": "%message", "service": "petclinic", "span_id": "%X{spanId}", "trace_id": "%X{traceId}", "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}", "thread": "%thread"}
-					</pattern>
-				</pattern>
-			</providers>
-		</encoder>
-	</appender>
-
-	<root level="INFO">
-		<appender-ref ref="JSON_CONSOLE"/>
-		<appender-ref ref="JSON_FILE"/>
-	</root>
+  <root level="DEBUG">
+    <appender-ref ref="FILE"/>
+    <appender-ref ref="JSON_TCP" />
+  </root>
 </configuration>
