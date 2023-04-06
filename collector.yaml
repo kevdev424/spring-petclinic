@@ -23,7 +23,28 @@ receivers:
           scrape_interval: 10s
           static_configs:
             - targets: ['0.0.0.0:8888']
-
+  
+   filelog:
+    include:
+      - ./log/spring-petclinic.log
+    start_at: end
+    poll_interval: 500ms
+    operators:
+      - id: parse_log
+        type: json_parser
+        parse_from: body
+      - id: add_trace_id
+        type: resource
+        attributes:
+          - key: trace_id
+            from: record
+            parse_from: trace_id
+      - id: add_span_id
+        type: resource
+        attributes:
+          - key: span_id
+            from: record
+            parse_from: span_id
 processors:
   batch:
     send_batch_max_size: 100
