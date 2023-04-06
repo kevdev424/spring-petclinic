@@ -2,14 +2,9 @@
 <configuration>
 	<include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <!-- Default logback configuration -->
-    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
-    <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
-
 	<appender name="OTEL" class="io.opentelemetry.instrumentation.logback.v1_0.OpenTelemetryAppender">
-		<appender-ref ref="CONSOLE"/>
-		<appender-ref ref="FILE"/>
+		<appender-ref ref="JSON_CONSOLE"/>
+		<appender-ref ref="JSON_FILE"/>
 	</appender>
 
 	<appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
