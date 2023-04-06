@@ -1,62 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern><![CDATA[%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15}#%line %X{req.requestURI} traceId: %X{trace_id} spanId: %X{span_id} %msg\n]]></pattern>
+        </encoder>
+    </appender>
+
     <appender name="OTEL" class="io.opentelemetry.instrumentation.logback.v1_0.OpenTelemetryAppender">
-        <appender-ref ref="JSON_CONSOLE"/>
-        <appender-ref ref="JSON_FILE"/>
+        <appender-ref ref="STDOUT" />
     </appender>
 
-    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "level": "%level",
-                        "logger": "%logger",
-                        "message": "%message",
-                        "service": "petclinic",
-                        "span_id": "%X{spanId}",
-                        "trace_id": "%X{traceId}",
-                        "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
-                        "thread": "%thread"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
-
-    <appender name="JSON_FILE" class="ch.qos.logback.core.FileAppender">
-        <file>./log/spring-petclinic.log</file>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "level": "%level",
-                        "logger": "%logger",
-                        "message": "%message",
-                        "service": "petclinic",
-                        "span_id": "%X{spanId}",
-                        "trace_id": "%X{traceId}",
-                        "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
-                        "thread": "%thread"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
-
-    <root level="INFO">
-        <appender-ref ref="OTEL"/>
+    <root>
+        <level value="DEBUG" />
+        <appender-ref ref="STDOUT" />
     </root>
+
 </configuration>
