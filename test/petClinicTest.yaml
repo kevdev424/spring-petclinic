@@ -1,0 +1,5 @@
+version: v0.1
+testName: PetClinicTest
+testPlan: sample_test.jmx
+description: 'Pet Clinic Test Run'
+engineInstances: 1
