@@ -13,3 +13,4 @@ jobs:
   #   uses: ./.github/workflows/codeql.yml
   call-perf-testing-workflow:
     uses: ./.github/workflows/azure-load-testing.yml
+    secrets: inherit
