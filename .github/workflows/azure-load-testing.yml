@@ -7,8 +7,14 @@ env:
   LOAD_TEST_RESOURCE: "load-testing-ghaction"
   LOAD_TEST_RESOURCE_GROUP: "load-testing-ghaction-rg"
 
+permissions:
+  contents: read
+
 jobs:
   load-testing:
+    permissions:
+      id-token: write
+      contents: none
     runs-on: ubuntu-latest
 
     steps:
