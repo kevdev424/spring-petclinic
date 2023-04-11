@@ -1,0 +1,23 @@
+name: JMeter Performance Testing
+
+on:
+  workflow_call:
+
+jobs:
+  action_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run JMeter Test
+        uses: QAInsights/PerfAction@v3.1
+        with:
+          test-plan-path: test/sample_test.jmx
+          args: ""
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: jmeter-test-results
+          path: result.jtl
