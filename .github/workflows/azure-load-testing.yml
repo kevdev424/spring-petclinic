@@ -8,14 +8,13 @@ env:
   LOAD_TEST_RESOURCE_GROUP: "load-testing-ghaction-rg"
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
   load-testing:
-    permissions:
-      id-token: write
-      contents: none
     runs-on: ubuntu-latest
+    environment: dev
 
     steps:
       - name: Checkout
