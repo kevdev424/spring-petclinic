@@ -2,6 +2,16 @@ name: JMeter Performance Testing
 
 on:
   workflow_call:
+    inputs:
+      test-filepath:
+        type: string
+        description: 'The filepath where your Jmeter test plan is located'
+        required: true
+      artifact-name:
+        type: string
+        description: 'Artifact Name'
+        required: true
+        default: 'Test-Results'
 
 jobs:
   action_build:
@@ -13,11 +23,11 @@ jobs:
       - name: Run JMeter Test
         uses: QAInsights/PerfAction@v3.1
         with:
-          test-plan-path: test/sample_test.jmx
+          test-plan-path: ${{ inputs.test-filepathh }}
           args: ""
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: jmeter-test-results
+          name: ${{ inputs.artifact-name }}
           path: result.jtl
