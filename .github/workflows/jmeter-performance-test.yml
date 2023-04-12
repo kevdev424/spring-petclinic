@@ -23,11 +23,11 @@ jobs:
       - name: Run JMeter Test
         uses: QAInsights/PerfAction@v3.1
         with:
-          test-plan-path: ${{ inputs.test-filepathh }}
+          test-plan-path: ${{ inputs.test-filepath }}
           args: ""
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: jmeter-test-results
+          name: ${{ inputs.artifact-name }}
           path: result.jtl
