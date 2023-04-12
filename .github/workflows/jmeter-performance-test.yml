@@ -29,5 +29,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Jmeter-results #${{ inputs.artifact-name }}
+          name: jmeter-test-results
           path: result.jtl
