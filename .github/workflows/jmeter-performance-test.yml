@@ -21,7 +21,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Jmeter
-        uses: tush-tr/setup-jmeter@v1.1.0
+        run: |
+          java -version
+          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.1.zip
+          unzip apache-jmeter-5.4.1.zip
+          cd apache-jmeter-5.4.1/bin
+          ./jmeter -v
+          pwd
 
       - name: Run JMeter Test
         uses: QAInsights/PerfAction@v3.1
@@ -31,7 +37,7 @@ jobs:
 
       - name: Generate Report
         run: |
-          jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o test/
+          jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o /test
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
