@@ -1,0 +1,62 @@
+name: JMeter Performance Testing
+
+on:
+  workflow_call:
+    inputs:
+      jmeter-version:
+        type: string
+        description: 'The version of JMeter used to generate reports'
+        required: true
+        default: '5.5'
+      test-filepath:
+        type: string
+        description: 'The filepath where your Jmeter test plan (.jmx) is located'
+        required: true
+      output-filepath:
+        type: string
+        description: 'The filepath where you want the report to be created'
+        required: true
+      results-file:
+        type: string
+        description: 'The filename of the results of the performance test'
+        required: true
+        default: 'results.jtl'
+      artifact-name:
+        type: string
+        description: 'Artifact Name'
+        required: true
+        default: 'Test-Results'
+
+jobs:
+  action_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Jmeter
+        run: |
+          java -version
+          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-${{ inputs.jmeter-version }}.zip
+          unzip apache-jmeter-${{ inputs.jmeter-version }}.zip
+          cd apache-jmeter-${{ inputs.jmeter-version }}/bin
+          ./jmeter -v
+          pwd
+
+      - name: Run JMeter Test
+        uses: QAInsights/PerfAction@v3.1
+        with:
+          test-plan-path: ${{ inputs.test-filepath }}
+          args: ""
+
+      - name: Generate Report
+        run: |
+          cd $GITHUB_WORKSPACE/apache-jmeter-${{ inputs.jmeter-version }}/bin
+          mkdir $GITHUB_WORKSPACE/${{ inputs.output-filepath }}
+          ./jmeter -n -t $GITHUB_WORKSPACE/${{ inputs.test-filepath }} -l $GITHUB_WORKSPACE/${{ inputs.results-file }} -e -o $GITHUB_WORKSPACE/${{ inputs.output-filepath }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.output-filepath }}
