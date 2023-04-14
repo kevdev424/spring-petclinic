@@ -23,9 +23,9 @@ jobs:
       - name: Setup Jmeter
         run: |
           java -version
-          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.1.zip
-          unzip apache-jmeter-5.4.1.zip
-          cd apache-jmeter-5.4.1/bin
+          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.5.zip
+          unzip apache-jmeter-5.5.zip
+          cd apache-jmeter-5.5/bin
           ./jmeter -v
           pwd
 
@@ -37,7 +37,7 @@ jobs:
 
       - name: Generate Report
         run: |
-          jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o /test
+          jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o /test/reports
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
