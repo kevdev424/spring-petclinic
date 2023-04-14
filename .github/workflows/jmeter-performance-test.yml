@@ -26,8 +26,12 @@ jobs:
           test-plan-path: ${{ inputs.test-filepath }}
           args: ""
 
+      - name: Generate Report
+        run: |
+          jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o test/
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ inputs.artifact-name }}
-          path: result.html
+          path: result.jtl
