@@ -20,6 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup Jmeter
+        uses: tush-tr/setup-jmeter@v1.1.0
+
       - name: Run JMeter Test
         uses: QAInsights/PerfAction@v3.1
         with:
