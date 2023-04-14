@@ -15,4 +15,6 @@ jobs:
     uses: ./.github/workflows/jmeter-performance-test.yml
     with:
       test-filepath: test/sample_test.jmx
-      artifact-name: Jmeter-results
+      output-filepath: test/reports
+      results-file: results.jtl
+      artifact-name: Jmeter-test-results
