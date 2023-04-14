@@ -1,0 +1,16 @@
+name: Call Jmeter workflow
+
+on:
+  push:
+    branches:
+      - eston-performance-testing
+
+jobs:
+  call-perf-testing-workflow:
+    uses: ./.github/workflows/jmeter-performance-test.yml
+    with:
+      jmeter-version: '5.5'
+      test-filepath: test/sample_test.jmx
+      output-filepath: test/reports
+      results-file: results.jtl
+      artifact-name: Jmeter-test-results

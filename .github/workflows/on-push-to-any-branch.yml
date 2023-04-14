@@ -5,17 +5,10 @@ on:
     branches: [ '**' ]
 
 jobs:
-  # call-build-workflow:
-  #   uses: ./.github/workflows/maven-build.yml
-  # call-publish-test-results-workflow:
-  #   uses: ./.github/workflows/test-results.yml
-  # call-codeql-workflow:
-  #   uses: ./.github/workflows/codeql.yml
-  call-perf-testing-workflow:
-    uses: ./.github/workflows/jmeter-performance-test.yml
-    with:
-      jmeter-version: '5.5'
-      test-filepath: test/sample_test.jmx
-      output-filepath: test/reports
-      results-file: results.jtl
-      artifact-name: Jmeter-test-results
+  call-build-workflow:
+    uses: ./.github/workflows/maven-build.yml
+  call-publish-test-results-workflow:
+    uses: ./.github/workflows/test-results.yml
+  call-codeql-workflow:
+    uses: ./.github/workflows/codeql.yml
+  
