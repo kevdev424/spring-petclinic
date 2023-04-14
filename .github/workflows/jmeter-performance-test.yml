@@ -37,7 +37,7 @@ jobs:
 
       - name: Generate Report
         run: |
-          jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o /test/reports
+          ./jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o /test/reports
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
