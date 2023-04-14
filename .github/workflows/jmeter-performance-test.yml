@@ -38,7 +38,7 @@ jobs:
       - name: Generate Report
         run: |
           cd $GITHUB_WORKSPACE/apache-jmeter-5.5/bin
-          ./jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o ./test/reports
+          ./jmeter -n -t ${{ inputs.test-filepath }} -l result.jtl -e -o $GITHUB_WORKSPACE/test/reports
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
