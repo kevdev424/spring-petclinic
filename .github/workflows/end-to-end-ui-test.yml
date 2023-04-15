@@ -1,0 +1,35 @@
+name: End-to-End UI Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start web server
+        run: npm run start:prod & sleep 5
+
+      - name: Run UI test
+        run: npm run test
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: cypress/videos/*.mp4
+          path: cypress/screenshots/
