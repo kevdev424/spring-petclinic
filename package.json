@@ -1,5 +1,11 @@
 {
   "devDependencies": {
     "cypress": "^12.9.0"
+  },
+  "scripts": {
+    "test": "cypress run --record"
   }
 }
+
+
+
