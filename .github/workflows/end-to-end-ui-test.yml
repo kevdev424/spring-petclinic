@@ -1,37 +1,35 @@
 name: End-to-End UI Test
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  cypress:
+  e2e-test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: '14'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v2
-        with:
-          record: true
-          start: npm start
-          wait-on: 'http://localhost:3000'
-          env:
-            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-            CYPRESS_baseUrl: http://localhost:3000
+      - name: Start web server
+        run: npm run start:prod & sleep 5
+
+      - name: Run UI test
+        run: npm run test
 
       - name: Upload test results
         uses: actions/upload-artifact@v2
         with:
-          name: test-results
-          path: cypress/results/*
+          name: Test Results
+          path: cypress/videos/*.mp4
+          path: cypress/screenshots/
